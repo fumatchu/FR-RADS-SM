@@ -1,0 +1,47 @@
+
+#!/bin/bash
+user=$(whoami)
+#Checking for user permissions
+if [ "$user" != "root" ]; then
+echo ${red}"This program must be run as root ${textreset}"
+echo "Exiting"
+exit
+else
+echo "Running Program"
+fi
+cat <<EOF
+${red}**********************************
+This application is in Preview
+**********************************${textreset}
+
+Preview means that if it's working, technically, it's working.. the functionality is there. 
+HOWEVER, there may be mis-spellings, grammatical erros (was one just made?).. 
+Things may look weird in screen transitions..
+
+This is a Work in Progress and will be updated soon.. 
+Don't make fun of it :)
+ENJOY!!!
+EOF
+
+read -p "Press any Key"
+
+
+items=(1 "FreeRADIUS Management"
+       2 "System Management"
+       3 "Server Management Options"
+       4 "System Tools"
+)
+
+while choice=$(dialog --title "$TITLE" \
+		 --backtitle "Server Management" \
+                 --menu "Please select" 20 40 3 "${items[@]}" \
+                 2>&1 >/dev/tty)
+    do
+    case $choice in
+        1) /root/.servman/FRMan;;
+        2) /root/.servman/SYSMan;;
+        3) /root/.servman/SERVMan;;
+	4) /root/.servman/TOOLMan;;
+    esac
+done
+clear # clear after user pressed Cancel
