@@ -16,7 +16,8 @@ green=$(tput setaf 2)
 clear 
 
 cat <<EOF 
-This will ${red}REBOOT${textreset} the system now
+This will ${red}SHUTDOWN${textreset} the system now
+You will have to physically power on the system
 EOF
 while true; do
 read -p "Do you want to proceed? (y/n) " yn

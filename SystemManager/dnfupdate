@@ -16,12 +16,12 @@ green=$(tput setaf 2)
 clear 
 
 cat <<EOF 
-This will ${red}REBOOT${textreset} the system now
+This will Update ${yellow}all${textreset} packages on the system
 EOF
 while true; do
 read -p "Do you want to proceed? (y/n) " yn
 case $yn in 
-   [yY] ) reboot;
+   [yY] ) dnf -y update;
       break;;
    [nN] ) echo exiting...;
       exit;;
@@ -29,3 +29,4 @@ case $yn in
 esac
 done
 
+read -p "Press Any Key"
