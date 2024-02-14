@@ -1,0 +1,32 @@
+#!/bin/bash
+#Checking for user permissions
+user=$(whoami)
+if [ "$user" != "root" ]; then
+echo ${red}"This program must be run as root ${textreset}"
+echo "Exiting"
+exit
+else
+echo "Running Program"
+fi
+textreset=$(tput sgr0)
+red=$(tput setaf 1)
+yellow=$(tput setaf 3)
+green=$(tput setaf 2)
+
+clear
+cat  <<EOF
+${red}FreeRADIUS Login Test for MSCHAP${textreset}
+${yellow}Testing login via MSCHAP${textreset}
+
+EOF
+
+read -p "Please provide the AD username to emulate logging in from a client: " ADUSER
+read -p "Please provide the AD user's Password: " ADUSERPASS
+clear
+cat <<EOF
+${green}Testing User login with MS-MPPE${textreset}
+
+EOF
+radtest -t mschap $ADUSER $ADUSERPASS localhost 0 testing123
+
+read -p "Press Any Key" 

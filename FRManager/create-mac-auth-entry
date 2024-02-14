@@ -1,0 +1,59 @@
+#!/bin/bash
+#Checking for user permissions
+user=$(whoami)
+if [ "$user" != "root" ]; then
+echo ${red}"This program must be run as root ${textreset}"
+echo "Exiting"
+exit
+else
+echo "Running Program"
+fi
+textreset=$(tput sgr0)
+red=$(tput setaf 1)
+yellow=$(tput setaf 3)
+green=$(tput setaf 2)
+
+clear
+cat  <<EOF
+${red}FreeRADIUS Login Test for Mac Auth${textreset}
+${yellow}Create MAC Auth Entry in Users File${textreset}
+
+EOF
+
+read -p "Please input the mac address without hyphens or special characters (in CAPS- i.e.00B0D063C226): " MACADDR 
+
+
+#<MAC Address> Cleartext-Password := <MAC Address>, Calling-Station-Id == <MAC Address in CAPS with hyphens>
+#This is an example:
+#abdcef123456 Cleartext-Password := abdcef123456, Calling-Station-Id == AB-DC-EF-12-34-56
+
+
+echo $MACADDR Cleartext-Password := $MACADDR, Calling-Station-Id == > /root/.servman/FRManager/macauth.tmp
+echo $MACADDR | sed 's/../&-/g;s/-$//' >> /root/.servman/FRManager/macauth.tmp
+
+awk '{if(NR%2==0) {print var,$0} else {var=$0}}' /root/.servman/FRManager/macauth.tmp >/root/.servman/FRManager/macauth.tmp.1
+sed -i -e '2r /root/.servman/FRManager/macauth.tmp.1' /etc/raddb/mods-config/files/authorize
+
+rm -f /root/.servman/FRManager/macauth*
+
+echo "The new entry was place into line 2 of the Users File:"
+
+cat /etc/raddb/users | head -n 5 
+echo " "
+echo "You Must Restart the FreeRADIUS Server for the changes to take effect"
+
+while true; do
+read -p "Would you like to restart the service now? (y/n) " yn
+case $yn in 
+   [yY] ) systemctl restart radiusd;
+      break;;
+   [nN] ) echo exiting...;
+      exit;;
+   * ) echo invalid response;;
+esac
+done
+exit
+
+
+
+read -p "Press Any Key" 

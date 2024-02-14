@@ -1,0 +1,139 @@
+#!/bin/bash
+#Checking for user permissions
+user=$(whoami)
+if [ "$user" != "root" ]; then
+echo ${red}"This program must be run as root ${textreset}"
+echo "Exiting"
+exit
+else
+echo "Running Program"
+fi
+textreset=$(tput sgr0)
+red=$(tput setaf 1)
+yellow=$(tput setaf 3)
+green=$(tput setaf 2)
+
+clear
+cat  <<EOF
+${red}FreeRADIUS Debug Mode for Active Directory${textreset}
+${yellow}This mode will troubleshoot any network inconsistencies for AD connectivity${textreset}
+The following tests will be taken:
+	-Asking you for the AD server this FreeRadius is connected
+	-Pinging the AD Host.. it is assumed ICMP is working but if not, we will disregard
+  	-Test some host and nslookup commands
+	-If you pass those test successfully, continue, otherwise Ctrl-C to troubleshoot
+
+If the above tests succeeded, then continue to test for:
+	-RPC call functionaliity
+	-Query AD for Users
+	-Query AD for Groups
+
+If those reults are successful, then we will continue to:
+	-Test a user acocunt to login via winbind 
+	-Conclude
+After you are done troubleshooting, the service will automatically restart.
+
+${red}*Note- If you are using a Samba Domain controller, please make sure that:
+"ntlm auth = mschapv2-and-ntlmv2-only"
+is in the global section of the smb.conf file. ${textreset}
+
+EOF
+read -p "Press Any Key When Ready or Ctrl -C to cancel"
+clear
+read -p "Please provide the FQDN of the AD server this FreeRADIUS machine should be talking to: " ADHOST
+read -p "Please provide this DOMAIN Realm (i.e. TEST.INT): " REALM
+read -p "Please provide and AD User that we can use to test Authentication: " ADUSER
+read -p "Please provide the AD user's Password: " ADUSERPASS
+clear
+echo ${green}"Testing DNS lookup to the Active Directory Server"${textreset} 
+
+nslookup $ADHOST
+
+echo " "
+read -p "Press Any Key When Ready or Ctrl -C to cancel"
+
+
+clear
+
+cat << EOF
+This Server should be using the AD envrionment for DNS resolution
+We are now going to lookup some service records from the AD Server:
+
+Query for kerberos._udp from the DNS
+
+The result should be similar to this:
+_kerberos._udp.samdom.example.com has SRV record 0 100 88 dc1.samdom.example.com.
+
+${yellow}Result:${textreset}
+EOF
+host -t SRV _kerberos._udp.$REALM. $ADHOST
+echo " " 
+read -p "Press Any Key When Ready or Ctrl -C to cancel"
+
+cat <<EOF 
+
+
+Query for ldap._tcp. from the DNS:
+
+The result should be similar to this:
+_ldap._tcp.samdom.example.com has SRV record 0 100 389 dc1.samdom.example.com.
+
+${yellow}Result:${textreset}
+EOF
+host -t SRV _ldap._tcp.$REALM. $ADHOST
+
+echo " "
+read -p "Press Any Key When Ready or Ctrl -C to cancel"
+
+clear 
+cat << EOF
+
+Testing winbind 
+
+${yellow}Result:${textreset}
+EOF
+
+wbinfo -t
+
+echo " " 
+read -p "Press Any Key or Ctrl-C to cancel"
+
+clear 
+
+cat <<EOF
+We are now going to test to see AD Users and Groups 
+You should see your AD Users
+
+EOF
+
+
+
+wbinfo -u
+echo " "
+read -p "Press Any Key When Ready or Ctrl -C to cancel"
+clear 
+
+cat <<EOF
+You should now see your AD groups
+
+EOF
+
+wbinfo -g
+read -p "Press Any Key When Ready or Ctrl -C to cancel"
+clear
+
+echo "Testing authentication with the AD user $ADUSER and Password $ADUSERPASS"
+
+wbinfo -a $ADUSER%$ADUSERPASS | grep challenge/response
+echo " "
+read -p "Press Any Key When Ready or Ctrl -C to cancel"
+
+cat <<EOF
+If all of these tests passed validation, your troubleshooting steps for the connection between the FreeRADIUS server
+and Active Directory is complete. You should further test connectivity between the NAS endpoint and FreeRADIUS, or check Certs if this is an endpoint issue and you are using PEAP/MSCHAPv2
+EOF
+
+echo "Restarting FreeRADIUS"
+systemctl restart radiusd
+
+read -p "Press Any Key When Ready"

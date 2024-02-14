@@ -29,6 +29,6 @@ radiusd -X
 
 read -p "Press Any Key"
 systemctl restart radiusd
-systemctl status radiusd
+systemctl status radiusd 
 
 read -p "Press Any Key"
