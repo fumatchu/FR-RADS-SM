@@ -20,9 +20,9 @@ EOF
 
 sleep 1
 
-mkdir /root/ADDCInstaller
+mkdir /root/FR-RADS-SMInstaller
 
-git clone https://github.com/fumatchu/FR-RADS-SM.git /root/ADDCInstaller
+git clone https://github.com/fumatchu/FR-RADS-SM.git /root/FR-RADS-SMInstaller
 
 chmod 700 /root/FR-RADS-SMInstaller/FR*
 clear
