@@ -19,9 +19,9 @@ ${yellow}System Management on Boot${textreset}
 EOF
 
 while true; do
-read -p "Do you want to enable SM on Boot? (y/n) " yn
-case $yn in 
-   [yY] ) echo "/usr/bin/server-manager" >> /root/.bash_profile;
+read -p "Do you want to disable SM on Boot? (y/n) " yn
+case $yn in
+   [yY] ) sed -i '/server-manager/d' /root/.bash_profile;
       break;;
    [nN] ) echo exiting...;
       exit;;
