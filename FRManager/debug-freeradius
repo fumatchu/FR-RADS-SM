@@ -1,1 +1,34 @@
+#!/bin/bash
+#Checking for user permissions
+user=$(whoami)
+if [ "$user" != "root" ]; then
+echo ${red}"This program must be run as root ${textreset}"
+echo "Exiting"
+exit
+else
+echo "Running Program"
+fi
+textreset=$(tput sgr0)
+red=$(tput setaf 1)
+yellow=$(tput setaf 3)
+green=$(tput setaf 2)
 
+clear
+cat  <<EOF
+${red}FreeRADIUS Debug Mode${textreset}
+${yellow}This mode will shutdown the FreeRADIUS service and run FreeRADIUS as radiusd -X${textreset}
+This will allow troublshooting on this screen for detailed analysis for FreeRADIUS itself
+To end your Troubleshooting session Press ${yellow}Ctrl-C${textreset}
+After you are done troubleshooting, the service will automatically restart.
+EOF
+
+read -p "Press Any Key"
+
+systemctl stop radiusd
+radiusd -X
+
+read -p "Press Any Key"
+systemctl restart radiusd
+systemctl status radiusd
+
+read -p "Press Any Key"
