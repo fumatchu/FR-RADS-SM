@@ -35,8 +35,8 @@ cat /root/.servman/FRManager/MAC_TEMPLATE6 >> /root/.servman/FRManager/MAC_TEMPL
 awk '{if(NR%2==0) {print var,$0} else {var=$0}}' /root/.servman/FRManager/MAC_TEMPLATE4 > /root/.servman/FRManager/MAC_TEMPLATE_FINAL
 sed -i -e '13r /root/.servman/FRManager/MAC_TEMPLATE_FINAL' /etc/raddb/mods-config/files/authorize
 rm -f /root/.servman/FRManager/MAC*
-echo "The new entry was place into line 2 of the Users File:"
-cat /etc/raddb/users | head -n 5
+echo "The new entry was place into line 13 of the Users File:"
+cat /etc/raddb/users | head -n 30
 echo " "
 echo "You Must Restart the FreeRADIUS Server for the changes to take effect"
 
