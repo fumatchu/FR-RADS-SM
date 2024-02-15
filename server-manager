@@ -13,7 +13,7 @@ items=(1 "FreeRADIUS Management"
        2 "System Management"
        3 "Server Management Options"
        4 "System Tools"
-       5 "Welecome to Server Manager"
+       5 "Welcome to Server Manager"
 )
 
 while choice=$(dialog --title "$TITLE" \
