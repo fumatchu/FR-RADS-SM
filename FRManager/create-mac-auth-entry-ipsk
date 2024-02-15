@@ -1,0 +1,58 @@
+#!/bin/bash
+#Checking for user permissions
+user=$(whoami)
+if [ "$user" != "root" ]; then
+echo ${red}"This program must be run as root ${textreset}"
+echo "Exiting"
+exit
+else
+echo "Running Program"
+fi
+textreset=$(tput sgr0)
+red=$(tput setaf 1)
+yellow=$(tput setaf 3)
+green=$(tput setaf 2)
+maclower=$($MACADDR |sed -e 's/\(.*\)/\L\1/')
+clear
+cat  <<EOF
+${red}FreeRADIUS MAC AUTH UPDATE WITH IPSK${textreset}
+${yellow}Create MAC Auth with iPSK${textreset}
+
+EOF
+
+read -p "Please input the mac address without hyphens or special characters (i.e. 00B0D063C226): " MACADDR
+read -p "Please provide a description for the MAC Address: " DESC
+read -p "Please provide the Tunnel Password you would like to use: " TUNNELPASS
+
+#Create MAC Address Entry
+echo $MACADDR |sed -e 's/\(.*\)/\L\1/' > /root/.servman/FRManager/MAC_TEMPLATE1
+echo "Cleartext-Password :=" >> /root/.servman/FRManager/MAC_TEMPLATE1
+awk '{if(NR%2==0) {print var,$0} else {var=$0}}' /root/.servman/FRManager/MAC_TEMPLATE1 > /root/.servman/FRManager/MAC_TEMPLATE2
+echo $MACADDR |sed -e 's/\(.*\)/\L\1/' >> /root/.servman/FRManager/MAC_TEMPLATE2
+awk '{if(NR%2==0) {print var,$0} else {var=$0}}' /root/.servman/FRManager/MAC_TEMPLATE2 > /root/.servman/FRManager/MAC_TEMPLATE3
+echo ", Calling-Station-Id == " >> /root/.servman/FRManager/MAC_TEMPLATE3
+awk '{if(NR%2==0) {print var,$0} else {var=$0}}' /root/.servman/FRManager/MAC_TEMPLATE3 > /root/.servman/FRManager/MAC_TEMPLATE4
+echo $MACADDR | sed 's/../&-/g;s/-$//' >> /root/.servman/FRManager/MAC_TEMPLATE5
+< /root/.servman/FRManager/MAC_TEMPLATE5 awk '{print toupper($0)}' > /root/.servman/FRManager/MAC_TEMPLATE6
+cat /root/.servman/FRManager/MAC_TEMPLATE6 >> /root/.servman/FRManager/MAC_TEMPLATE4
+awk '{if(NR%2==0) {print var,$0} else {var=$0}}' /root/.servman/FRManager/MAC_TEMPLATE4 > /root/.servman/FRManager/MAC_TEMPLATE_FINAL
+#Create Tunnel Pasword Entry
+echo "         Tunnel-Password = $TUNNELPASS" >> /root/.servman/FRManager/MAC_TEMPLATE_FINAL
+echo "#$DESC" >> /root/.servman/FRManager/MAC_TEMPLATE_FINAL
+
+sed -i -e '13r /root/.servman/FRManager/MAC_TEMPLATE_FINAL' /etc/raddb/mods-config/files/authorize
+rm -f /root/.servman/FRManager/MAC*
+echo " "
+echo "You Must Restart the FreeRADIUS Server for the changes to take effect"
+
+while true; do
+read -p "Would you like to restart the service now? (y/n) " yn
+case $yn in
+   [yY] ) systemctl restart radiusd;
+      break;;
+   [nN] ) echo exiting...;
+      exit;;
+   * ) echo invalid response;;
+esac
+done
+exit
