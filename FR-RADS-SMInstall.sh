@@ -28,6 +28,7 @@ The installer will continue shortly
 EOF
 
 sleep 20
+dnf -y install dialog nano htop iptraf-ng mc
 cd /root/FR-RADS-SMInstaller
 mkdir /root/.servman
 mv -v FRM* /root/.servman
