@@ -12,16 +12,17 @@ fi
 
 items=(1 "Start FreeRADIUS Service"
        2 "Stop FreeRADIUS Service"
-       3 "Restart FreeRADIUS  Service" 
+       3 "Restart FreeRADIUS  Service"
        4 "FreeRADIUS Service Status"
        5 "Debug Mode -radiusd -X-"
        6 "AD Connector Diag"
        7 "Test PEAP/MSCHAP"
-       8 "Test MAC AUTH"
+       8 "Add MAC Address for Auth"
+       9 "Delete MAC Address from Auth"
 )
 
 while choice=$(dialog --title "$TITLE" \
-		 --backtitle "FreeRADIUS Service Management" \
+                 --backtitle "FreeRADIUS Service Management" \
                  --menu "Please select" 20 45 3 "${items[@]}" \
                  2>&1 >/dev/tty)
     do
@@ -33,7 +34,8 @@ while choice=$(dialog --title "$TITLE" \
         5) /root/.servman/FRManager/debug-freeradius;;
         6) /root/.servman/FRManager/debug-ad-connector;;
         7) /root/.servman/FRManager/fr-peap-mschap-test;;
-        8) /root/.servman/FRManager/fr-mac-auth-test;;
+        8) /root/.servman/FRManager/create-mac-auth-entry;;
+        9) /root/.servman/FRManager/delete-mac-auth-entry;;
         *) ;; # some action on other
     esac
 done
