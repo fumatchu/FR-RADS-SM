@@ -28,7 +28,7 @@ The installer will continue shortly
 EOF
 
 sleep 20
-
+cd /root/FR-RADS-SMInstaller
 mkdir /root/.servman
 mv -v FRM* /root/.servman
 mv -v ./SERVMan /root/.servman
@@ -41,4 +41,5 @@ chmod 700 ./server-manager
 mv -v server-manager /usr/bin/
 chmod 700 -R /root/.servman
 echo "/usr/bin/server-manager" >> /root/.bash_profile
+/usr/bin/server-manager
 
