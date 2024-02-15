@@ -36,6 +36,7 @@ mv -v ./TOOLMan /root/.servman
 mv -v SYSMan /root/.servman
 mv -v ServerManager/ /root/.servman
 mv -v ./SystemManager/ /root/.servman
+mv -v ./welcome.readme /root/.servman
 chmod 700 ./server-manager
 mv -v server-manager /usr/bin/
 chmod 700 -R /root/.servman
