@@ -1,0 +1,98 @@
+#!/bin/bash
+textreset=$(tput sgr0)
+red=$(tput setaf 1)
+yellow=$(tput setaf 3)
+green=$(tput setaf 2)
+
+clear
+cat << EOF
+${red}Server Management${textreset}
+
+Welcome to Server Management. This is a dialog based driven GUI menu system backed by smaller scripts
+to help you get things (hopefully) efficiently.
+Server management is based on scripts designed for the RADS and FR-RADS installs, but also brings
+native menus into the system.
+
+
+For an FR-RADS install the following is available:
+
+${green}FreeRADIUS Management${textreset}
+
+        -Add MAC Address for Auth
+                This will allow you to add MAC addresses into the local users file without having to know the formatting or delimeters
+                This will ask you for the MAC address you want to input, with description, and add it to the users file. It will then
+                prompt you to add a description for the device (just so we can keep track of what these MACS are)
+
+        -Delete MAC Address from Auth
+                This will remove an entry already in the uers file and clean up spacing
+
+        -Add MAC Address for Auth with iPSK
+                Very similar to "Add MAC address for Auth", this will prompt you for an additional field, that is, the Tunnel Password
+
+        -Delete MAC Address from Auth with iPSK
+                Again, Very similar to removing a MAC Auth, but this removal option also cleans up the tunnel password
+
+        ${red}*It's Very important that you use the correct option for removing an entry.. Otherwise you may remove a MAC entry you didn't want to remove.${textreset}
+
+        -Edit Users File
+                Will call nano to allow manual editing of the users file. After edit, will prompt you to restart and provide status of the service
+
+        -Start FreeRADIUS Service
+                This allows you to start the FR service from the menu, and additionaly provides a status of the service after start command
+
+        -Stop FreeRADIUS Service
+                This allows you to stop the FR service from the menu, and additionaly provides a status of the service after start command
+
+        -Restart FreeRADIUS Service
+                This allows you to restart the FR service from the menu, and additionaly provides a status of the service after start command
+
+        -FreeRADIUS Server Status
+                This allows you to see the current running status of the FreeRADIUS service
+
+        -Debug Mode (Radius -X)
+                This will shutdown the FreeRADIUS service and run radiusd -X on the interactive terminal. This will allow you to see detailed output
+                of the radius decisions for testing purposes. After testing, press Crtl-C and the Active terminal will return the service status, then exit
+
+        -AD Connector Diag
+                This will run the server through output testing in a logical order to try and decipher why you may be running into an issue with AD
+                The program will do the follwing:
+                                -Validate that it can reach the AD server through nslookup
+                                -Query for _kerberos._udp. from the AD server
+                                -Query for _ldap._tcp. from the AD server
+                                -Initiate an RPC call towards AD to validate it
+                                -Query AD for Users
+                                -Query AD for Groups
+                                -Validate a user login (from one you provided for an active user in AD)
+                                -Restart the radiusd service after testing
+
+        -Test PEAP/MSCHAP
+                This program will test a user account from the FreeRadius perspective (via radtest) based on an AD user you provide.
+
+${green}System Management${textreset}
+
+        -Check for system updates
+                This will allow you to update the server for the core rpm packages (dnf -y update)
+        -Start/Stop Services on boot
+                This will allow you to enable or disable services on boot (ntsysv)
+        -Show Network Settings
+                Will dsiplay a static output of the current interface configuration (nmcli)
+        -Reboot the Server
+                Will reboot the Server
+        -Shutdown the Server
+                Will shutdown the server
+
+${green}Server Management Options${textreset}
+        -Enable SM on Boot (will configure SM to load when logging in as root)
+        -Disable SM on Boot (will remove SM from loading upon logging into the server as root)
+
+${green}System Tools${textreset}
+        -Process Monitor
+                Loads htop for process monitoring
+        -Network Monitor
+                Loads iptraf-ng for Traffic flow
+        -File Manager
+                Loads mc for file management
+        -Editor
+                Loads nano
+EOF
+read -p "Press Any Key to Exit"
