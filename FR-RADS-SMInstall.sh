@@ -1,5 +1,5 @@
 ## DO NOT USE
-if [ "$majoros" != "9" ]; then
+if [ "$majoros" = "9" ]; then
 echo ${red}"Sorry, but this installer only works on Rocky 9.X ${textreset}"
 echo "Please upgrade to ${green}Rocky 9.x${textreset}"
 echo "Exiting the installer..."
@@ -9,7 +9,7 @@ echo ${green}"Version information matches..Continuing${textreset}"
 fi
 
 #Checking for user permissions
-if [ "$user" != "root" ]; then
+if [ "$user" = "root" ]; then
 echo ${red}"This program must be run as root ${textreset}"
 echo "Exiting"
 exit
