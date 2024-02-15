@@ -1,0 +1,39 @@
+#!/bin/bash
+#Checking for user permissions
+user=$(whoami)
+if [ "$user" != "root" ]; then
+echo ${red}"This program must be run as root ${textreset}"
+echo "Exiting"
+exit
+else
+echo "Running Program"
+fi
+textreset=$(tput sgr0)
+red=$(tput setaf 1)
+yellow=$(tput setaf 3)
+green=$(tput setaf 2)
+
+clear
+cat  <<EOF
+${red}FreeRADIUS Edit Users${textreset}
+${yellow}Edit Users File${textreset}
+
+Please make sure you are comfortable with editing the users file before continuing
+
+EOF
+read -p "Press Any Key or Ctrl-C to Exit"
+nano /etc/raddb/users
+
+echo "If you have modified the users file, you must restart the radiusd service."
+
+while true; do
+read -p "Would you like to restart the service now? (y/n) " yn
+case $yn in
+   [yY] ) systemctl restart radiusd && systemctl status radiusd && sleep 3;
+      break;;
+   [nN] ) echo exiting...;
+      exit;;
+   * ) echo invalid response;;
+esac
+done
+exit
