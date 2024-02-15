@@ -1,3 +1,4 @@
+
 #!/bin/bash
 #Checking for user permissions
 user=$(whoami)
@@ -16,14 +17,15 @@ maclower=$($MACADDR |sed -e 's/\(.*\)/\L\1/')
 clear
 cat  <<EOF
 ${red}FreeRADIUS MAC AUTH UPDATE${textreset}
-${yellow}Create MAC Auth Entry in Users File${textreset}
+${yellow}Remove MAC Auth Entry${textreset}
 
 EOF
 
 read -p "Please input the mac address ${yellow}without special characters, and lowercase${textreset} (i.e.00b0d063c226): " MACADDR
 
+sed -i "/^$MACADDR/{n;d}" /etc/raddb/mods-config/files/authorize
+sed -i "/$MACADDR/d" /etc/raddb/mods-config/files/authorize
 
-sed -i '/$MACADDR/d' /etc/raddb/mods-config/files/authorize
 echo "You Must Restart the FreeRADIUS Server for the changes to take effect"
 
 while true; do
