@@ -1,0 +1,40 @@
+#!/bin/bash
+#Checking for user permissions
+user=$(whoami)
+if [ "$user" != "root" ]; then
+echo ${red}"This program must be run as root ${textreset}"
+echo "Exiting"
+exit
+else
+echo "Running Program"
+fi
+textreset=$(tput sgr0)
+red=$(tput setaf 1)
+yellow=$(tput setaf 3)
+green=$(tput setaf 2)
+maclower=$($MACADDR |sed -e 's/\(.*\)/\L\1/')
+clear
+cat  <<EOF
+${red}FreeRADIUS MAC AUTH UPDATE${textreset}
+${yellow}Remove MAC Auth Entry for IPSK${textreset}
+
+EOF
+
+read -p "Please input the mac address ${yellow}without special characters, and lowercase${textreset} (i.e.00b0d063c226): " MACADDR
+
+sed -i "/^$MACADDR/{n;d}" /etc/raddb/mods-config/files/authorize
+sed -i "/^$MACADDR/{n;d}" /etc/raddb/mods-config/files/authorize
+sed -i "/$MACADDR/d" /etc/raddb/mods-config/files/authorize
+echo "You Must Restart the FreeRADIUS Server for the changes to take effect"
+
+while true; do
+read -p "Would you like to restart the service now? (y/n) " yn
+case $yn in
+   [yY] ) systemctl restart radiusd;
+      break;;
+   [nN] ) echo exiting...;
+      exit;;
+   * ) echo invalid response;;
+esac
+done
+exit
