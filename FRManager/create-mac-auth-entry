@@ -16,11 +16,12 @@ maclower=$($MACADDR |sed -e 's/\(.*\)/\L\1/')
 clear
 cat  <<EOF
 ${red}FreeRADIUS MAC AUTH UPDATE${textreset}
-${yellow}Create MAC Auth Entry in Users File${textreset}
+${yellow}Create MAC Auth Entry${textreset}
 
 EOF
 
 read -p "Please input the mac address without hyphens or special characters (i.e. 00B0D063C226): " MACADDR
+read -p "Please provide a description for the MAC Address: " DESC
 
 echo $MACADDR |sed -e 's/\(.*\)/\L\1/' > /root/.servman/FRManager/MAC_TEMPLATE1
 echo "Cleartext-Password :=" >> /root/.servman/FRManager/MAC_TEMPLATE1
@@ -33,10 +34,9 @@ echo $MACADDR | sed 's/../&-/g;s/-$//' >> /root/.servman/FRManager/MAC_TEMPLATE5
 < /root/.servman/FRManager/MAC_TEMPLATE5 awk '{print toupper($0)}' > /root/.servman/FRManager/MAC_TEMPLATE6
 cat /root/.servman/FRManager/MAC_TEMPLATE6 >> /root/.servman/FRManager/MAC_TEMPLATE4
 awk '{if(NR%2==0) {print var,$0} else {var=$0}}' /root/.servman/FRManager/MAC_TEMPLATE4 > /root/.servman/FRManager/MAC_TEMPLATE_FINAL
+echo "#$DESC" >> MAC_TEMPLATE_FINAL
 sed -i -e '13r /root/.servman/FRManager/MAC_TEMPLATE_FINAL' /etc/raddb/mods-config/files/authorize
 rm -f /root/.servman/FRManager/MAC*
-echo "The new entry was place into line 13 of the Users File:"
-cat /etc/raddb/users | head -n 30
 echo " "
 echo "You Must Restart the FreeRADIUS Server for the changes to take effect"
 
