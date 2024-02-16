@@ -31,15 +31,15 @@ sleep 20
 dnf -y install dialog nano htop iptraf-ng mc
 cd /root/FR-RADS-SMInstaller
 mkdir /root/.servman
-mv -v FRM* /root/.servman
-mv -v ./SERVMan /root/.servman
-mv -v ./TOOLMan /root/.servman
-mv -v SYSMan /root/.servman
-mv -v ServerManager/ /root/.servman
-mv -v ./SystemManager/ /root/.servman
-mv -v ./welcome.readme /root/.servman
+mv -v -f FRM* /root/.servman
+mv -v -f ./SERVMan /root/.servman
+mv -v -f ./TOOLMan /root/.servman
+mv -v -f SYSMan /root/.servman
+mv -v -f ServerManager/ /root/.servman
+mv -v -f ./SystemManager/ /root/.servman
+mv -v -f ./welcome.readme /root/.servman
 chmod 700 ./server-manager
-mv -v server-manager /usr/bin/
+mv -v -f server-manager /usr/bin/
 chmod 700 -R /root/.servman
 echo "/usr/bin/server-manager" >>/root/.bash_profile
 /usr/bin/server-manager
