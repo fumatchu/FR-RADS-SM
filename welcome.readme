@@ -9,9 +9,9 @@ cat <<EOF
 ${red}Server Management${textreset}
 
 Welcome to Server Management. This is a dialog based driven GUI menu system backed by smaller scripts
-to help you get things (hopefully) efficiently.
+to help you get things done (hopefully) more efficiently.
 Server management is based on scripts designed for the RADS and FR-RADS installs, but also brings
-native menus into the system.
+native menus into the system(ntsysv, htop, etc).
 
 
 For an FR-RADS install the following is available:
@@ -75,11 +75,11 @@ ${green}System Management${textreset}
         -Start/Stop Services on boot
                 This will allow you to enable or disable services on boot (ntsysv)
         -Show Network Settings
-                Will dsiplay a static output of the current interface configuration (nmcli)
+                Display a static output of the current interface configuration (nmcli)
         -Reboot the Server
-                Will reboot the Server
+                reboot the server
         -Shutdown the Server
-                Will shutdown the server
+                shutdown the server (power it off)
 
 ${green}Server Management Options${textreset}
         -Enable SM on Boot (will configure SM to load when logging in as root)
@@ -89,10 +89,9 @@ ${green}System Tools${textreset}
         -Process Monitor
                 Loads htop for process monitoring
         -Network Monitor
-                Loads iptraf-ng for Traffic flow
+                Loads iptraf-ng for traffic flow
         -File Manager
                 Loads mc for file management
         -Editor
                 Loads nano
 EOF
-read -p "Press Any Key to Exit"
