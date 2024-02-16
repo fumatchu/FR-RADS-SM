@@ -1,20 +1,20 @@
 ## DO NOT USE
 if [ "$majoros" = "9" ]; then
-echo ${red}"Sorry, but this installer only works on Rocky 9.X ${textreset}"
-echo "Please upgrade to ${green}Rocky 9.x${textreset}"
-echo "Exiting the installer..."
-exit
+    echo ${red}"Sorry, but this installer only works on Rocky 9.X ${textreset}"
+    echo "Please upgrade to ${green}Rocky 9.x${textreset}"
+    echo "Exiting the installer..."
+    exit
 else
-echo ${green}"Version information matches..Continuing${textreset}"
+    echo ${green}"Version information matches..Continuing${textreset}"
 fi
 
 #Checking for user permissions
 if [ "$user" = "root" ]; then
-echo ${red}"This program must be run as root ${textreset}"
-echo "Exiting"
-exit
+    echo ${red}"This program must be run as root ${textreset}"
+    echo "Exiting"
+    exit
 else
-echo "Running Program"
+    echo "Running Program"
 fi
 
 cat <<EOF
@@ -41,6 +41,5 @@ mv -v ./welcome.readme /root/.servman
 chmod 700 ./server-manager
 mv -v server-manager /usr/bin/
 chmod 700 -R /root/.servman
-echo "/usr/bin/server-manager" >> /root/.bash_profile
+echo "/usr/bin/server-manager" >>/root/.bash_profile
 /usr/bin/server-manager
-
