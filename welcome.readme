@@ -5,7 +5,7 @@ yellow=$(tput setaf 3)
 green=$(tput setaf 2)
 
 clear
-cat << EOF
+cat <<EOF
 ${red}Server Management${textreset}
 
 Welcome to Server Management. This is a dialog based driven GUI menu system backed by smaller scripts
