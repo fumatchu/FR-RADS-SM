@@ -1,4 +1,4 @@
-## DO NOT USE
+## SMInstall.sh
 if [ "$majoros" = "9" ]; then
     echo ${red}"Sorry, but this installer only works on Rocky 9.X ${textreset}"
     echo "Please upgrade to ${green}Rocky 9.x${textreset}"
