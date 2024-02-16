@@ -14,8 +14,8 @@ yellow=$(tput setaf 3)
 green=$(tput setaf 2)
 
 cat <<EOF
-${yellow}System Management on Boot${textreset}
-
+${yellow}Remove System Management on Boot${textreset}
+You can type ${yellow}server-manager${textreset} from the cli at any time
 EOF
 
 while true; do
