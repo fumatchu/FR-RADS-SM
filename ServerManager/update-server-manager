@@ -1,5 +1,6 @@
 #!/bin/bash
 #Update Server Manager
+clear
 cd /root/
 dnf -y install wget
 wget https://raw.githubusercontent.com/fumatchu/FR-RADS-SM/main/FR-RADS-SMInstaller.sh
