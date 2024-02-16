@@ -11,7 +11,8 @@ ${red}Server Management${textreset}
 Welcome to Server Management. This is a dialog based driven GUI menu system backed by smaller scripts
 to help you get things done (hopefully) more efficiently.
 Server management is based on scripts designed for the RADS and FR-RADS installs, but also brings
-native menus into the system(ntsysv, htop, etc).
+native menus into the system(ntsysv, htop, etc). You can start Server Management at any time by typing 
+${yellow}server-manager${textreset} from the terminal
 
 
 For an FR-RADS install the following is available:
