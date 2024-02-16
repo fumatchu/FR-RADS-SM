@@ -85,6 +85,7 @@ ${green}System Management${textreset}
 ${green}Server Management Options${textreset}
         -Enable SM on Boot (will configure SM to load when logging in as root)
         -Disable SM on Boot (will remove SM from loading upon logging into the server as root)
+        -Update Module will have server-manager go out to GitHub and check for updates to server-manager
 
 ${green}System Tools${textreset}
         -Process Monitor
