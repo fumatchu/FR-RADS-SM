@@ -43,3 +43,4 @@ mv -v -f server-manager /usr/bin/
 chmod 700 -R /root/.servman
 echo "/usr/bin/server-manager" >>/root/.bash_profile
 /usr/bin/server-manager
+rm -r -f /root/FR-RADS*
