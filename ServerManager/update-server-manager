@@ -1,3 +1,4 @@
+#!/bin/bash
 #Update Server Manager
 cd /root/
 dnf -y install wget
