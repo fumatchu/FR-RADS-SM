@@ -28,6 +28,9 @@ The installer will continue shortly
 EOF
 
 sleep 20
+#If SM exists, delete it
+rm  -r -f /root/.servman
+rm -r -f /usr/bin/server-manager
 dnf -y install dialog nano htop iptraf-ng mc
 cd /root/FR-RADS-SMInstaller
 mkdir /root/.servman
