@@ -45,7 +45,7 @@ while choice=$(dialog --title "$TITLE" \
     12) /root/.servman/FRManager/debug-ad-connector ;;
     13) /root/.servman/FRManager/fr-peap-mschap-test ;;
     14) /root/.servman/FRManager/generate-cert ;;
-    15 /root/.servman/FRManager/renew-cert ;;
+    15) /root/.servman/FRManager/renew-cert ;;
     *) ;; # some action on other
     esac
 done
