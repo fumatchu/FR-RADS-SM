@@ -22,6 +22,8 @@ items=(1 "Add MAC Address for Auth"
     11 "Debug Mode -radiusd -X-"
     12 "AD Connector Diag"
     13 "Test PEAP/MSCHAP"
+    14 "Generate self-signed Certs"
+    15 "Renew Prexisting Certs"
 )
 
 while choice=$(dialog --title "$TITLE" \
@@ -42,6 +44,8 @@ while choice=$(dialog --title "$TITLE" \
     11) /root/.servman/FRManager/debug-freeradius ;;
     12) /root/.servman/FRManager/debug-ad-connector ;;
     13) /root/.servman/FRManager/fr-peap-mschap-test ;;
+    14) /root/.servman/FRManager/generate-cert ;;
+    15 /root/.servman/FRManager/renew-cert ;;
     *) ;; # some action on other
     esac
 done
