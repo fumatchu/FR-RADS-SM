@@ -1,6 +1,10 @@
 #!/bin/bash
 clear
 cat <<EOF
+This is a one time self-generation script that will modify the cnf files in the 
+/etc/raddb/certs directory. You cannot change the certificate names after running this
+unless you go into the .cnf files by hand. Please make sure you are positive on the Common name, etc.
+
 This will generate extended, custom cerificates for testing purposes.
 If you are going to run this server in production, you should be installing
 valid certificates on this server from a valid cert authority
