@@ -40,8 +40,8 @@ while choice=$(dialog --title "$TITLE" \
     9) /root/.servman/FRManager/restart-freeradius-server ;;
     10) /root/.servman/FRManager/service-freeradius-status ;;
     11) /root/.servman/FRManager/debug-freeradius ;;
-    13) /root/.servman/FRManager/debug-ad-connector ;;
-    14) /root/.servman/FRManager/fr-peap-mschap-test ;;
+    12) /root/.servman/FRManager/debug-ad-connector ;;
+    13) /root/.servman/FRManager/fr-peap-mschap-test ;;
     *) ;; # some action on other
     esac
 done
