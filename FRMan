@@ -28,7 +28,7 @@ items=(1 "Add MAC Address for Auth"
 
 while choice=$(dialog --title "$TITLE" \
     --backtitle "FreeRADIUS Service Management" \
-    --menu "Please select" 20 50 3 "${items[@]}" \
+    --menu "Please select" 25 50 3 "${items[@]}" \
     2>&1 >/dev/tty); do
     case $choice in
     1) /root/.servman/FRManager/create-mac-auth-entry ;;
