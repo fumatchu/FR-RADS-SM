@@ -1,4 +1,5 @@
 #!/bin/bash
+clear
 cat <<EOF
 This will generate extended certificates for testing purposes.
 If you are going to run this server in production, you should be installing
