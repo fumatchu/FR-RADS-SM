@@ -69,6 +69,18 @@ ${green}FreeRADIUS Management${textreset}
         -Test PEAP/MSCHAP
                 This program will test a user account from the FreeRadius perspective (via radtest) based on an AD user you provide.
 
+        -Generate Self-Signed Certs
+                                - This will generate 5 year selfs-gned certifciates based on use input of Cert description
+                                                -Cert Password 
+                                                -Country
+                                                -State
+                                                -City
+                                                -Email-Address
+                                                -Common Name
+
+        -Renew Pre-existing Certs
+                                -Renews the Certs already in-place
+
 ${green}System Management${textreset}
 
         -Check for system updates
