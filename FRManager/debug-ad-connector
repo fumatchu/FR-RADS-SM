@@ -42,7 +42,7 @@ read -p "Press Any Key When Ready or Ctrl -C to cancel"
 clear
 read -p "Please provide the FQDN of the AD server this FreeRADIUS machine should be talking to: " ADHOST
 read -p "Please provide this DOMAIN Realm (i.e. TEST.INT): " REALM
-read -p "Please provide and AD User that we can use to test Authentication: " ADUSER
+read -p "Please provide an AD User that we can use to test Authentication: " ADUSER
 read -p "Please provide the AD user's Password: " ADUSERPASS
 clear
 echo ${green}"Testing DNS lookup to the Active Directory Server"${textreset} 
