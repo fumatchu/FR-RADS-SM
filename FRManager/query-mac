@@ -26,6 +26,8 @@ echo "Result:"
 
 more /etc/raddb/users | grep $QUERY -C2
 cat  << EOF
-Note- The Description is UNDER the MAC address Entry
+
+${red}Note- The Description is UNDER the MAC address Entry${textreset}
+
 EOF
 read -p "Press Any Key to Continue"
