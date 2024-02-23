@@ -9,7 +9,7 @@ cat <<EOF
 ${red}Server Management${textreset}
 
 Welcome to Server Management. This is a dialog based driven GUI menu system backed by smaller scripts
-to help you get things done (hopefully) more efficiently.
+to help you get things done efficiently.
 Server management is based on scripts designed for the RADS and FR-RADS installs, but also brings
 native menus into the system(ntsysv, htop, etc). You can start Server Management at any time by typing 
 ${yellow}server-manager${textreset} from the terminal
@@ -69,6 +69,18 @@ ${green}FreeRADIUS Management${textreset}
         -Test PEAP/MSCHAP
                 This program will test a user account from the FreeRadius perspective (via radtest) based on an AD user you provide.
 
+        -Generate Self-Signed Certs
+                                - This will generate 5 year selfs-gned certifciates based on use input of Cert description
+                                                -Cert Password 
+                                                -Country
+                                                -State
+                                                -City
+                                                -Email-Address
+                                                -Common Name
+
+        -Renew Pre-existing Certs
+                                -Renews the Certs already in-place
+
 ${green}System Management${textreset}
 
         -Check for system updates
@@ -85,6 +97,7 @@ ${green}System Management${textreset}
 ${green}Server Management Options${textreset}
         -Enable SM on Boot (will configure SM to load when logging in as root)
         -Disable SM on Boot (will remove SM from loading upon logging into the server as root)
+        -Update Module will have server-manager go out to GitHub and check for updates to server-manager
 
 ${green}System Tools${textreset}
         -Process Monitor
@@ -95,4 +108,8 @@ ${green}System Tools${textreset}
                 Loads mc for file management
         -Editor
                 Loads nano
+
+
+
+######################
 EOF

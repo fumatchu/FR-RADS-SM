@@ -1,0 +1,93 @@
+#!/bin/bash
+clear
+cat <<EOF
+This is a one time self-generation script that will modify the cnf files in the 
+/etc/raddb/certs directory. You cannot change the certificate names after running this
+unless you go into the .cnf files by hand. Please make sure you are positive on the Common name, etc.
+
+This will generate extended, custom cerificates for testing purposes.
+If you are going to run this server in production, you should be installing
+valid certificates on this server from a valid cert authority
+
+Please type "y" if you want to proceeed
+EOF
+
+
+
+
+while true; do
+
+read -p "I understand the ramifications of using testing certs for 802.1x on this server  (y/n) " yn
+
+case $yn in
+        [yY] ) echo ok, we will proceed;
+                break;;
+        [nN] ) echo user did not agree...;
+                exit;;
+        * ) echo invalid response;;
+esac
+
+done
+
+
+read -p "Please provide the certificate password you would like to create: " "PASS"
+read -p "Please provide two letter Country name: " "COUNTRY"
+read -p "Please provide the state or province name: " "STATE"
+read -p "Please provide the city name in which you reside: " "LOCALITY"
+read -p "Please provide the organization name: " "ORGNAME"
+read -p "Please provide the email address in which to provide in the certificate: " "EMAIL"
+read -p "Provide the common name for the certificates: " "COMMONNAME"
+
+systemctl stop radiusd
+
+
+
+#remove these certs and corresponding entries
+rm -f *.pem *.der *.csr *.crt *.key *.p12 serial* index.txt*
+
+#Update the Fields for ca.cnf
+sed -i 's/= 60/= 1825/' /etc/raddb/certs/ca.cnf
+sed -i 's/= 30/= 1825/' /etc/raddb/certs/ca.cnf
+sed -i "s|whatever|${PASS}|" /etc/raddb/certs/ca.cnf
+sed -i "s|FR|${COUNTRY}|" /etc/raddb/certs/ca.cnf
+sed -i "s|Radius|${STATE}|" /etc/raddb/certs/ca.cnf
+sed -i "s|Somewhere|${LOCALITY}|" /etc/raddb/certs/ca.cnf
+sed -i "s|Example Inc.|${ORGNAME}|" /etc/raddb/certs/ca.cnf
+sed -i "s|admin@example.org|${EMAIL}|" /etc/raddb/certs/ca.cnf
+sed -i "s|Example Certificate Authority|${COMMONNAME}|" /etc/raddb/certs/ca.cnf
+
+#Update the fields for server.cnf
+sed -i 's/= 60/= 1825/' /etc/raddb/certs/server.cnf
+sed -i 's/= 30/= 1825/' /etc/raddb/certs/server.cnf
+sed -i "s|whatever|${PASS}|" /etc/raddb/certs/server.cnf
+sed -i "s|FR|${COUNTRY}|" /etc/raddb/certs/server.cnf
+sed -i "s|Radius|${STATE}|" /etc/raddb/certs/server.cnf
+sed -i "s|Somewhere|${LOCALITY}|" /etc/raddb/certs/server.cnf
+sed -i "s|Example Inc.|${ORGNAME}|" /etc/raddb/certs/server.cnf
+sed -i "s|admin@example.org|${EMAIL}|" /etc/raddb/certs/server.cnf
+sed -i "s|Example Server Certificate|${COMMONNAME}|" /etc/raddb/certs/server.cnf
+
+#Update the fields for client.cnf
+sed -i 's/= 60/= 1825/' /etc/raddb/certs/client.cnf
+sed -i 's/= 30/= 1825/' /etc/raddb/certs/client.cnf
+sed -i "s|whatever|${PASS}|" /etc/raddb/certs/client.cnf
+sed -i "s|FR|${COUNTRY}|" /etc/raddb/certs/client.cnf
+sed -i "s|Radius|${STATE}|" /etc/raddb/certs/client.cnf
+sed -i "s|Somewhere|${LOCALITY}|" /etc/raddb/certs/client.cnf
+sed -i "s|Example Inc.|${ORGNAME}|" /etc/raddb/certs/client.cnf
+sed -i "s|user@example.org|${EMAIL}|" /etc/raddb/certs/client.cnf
+
+#Modify the private_key_password
+sed -i "s|whatever|${PASS}|" /etc/raddb/mods-enabled/eap
+
+#create new certs
+/etc/raddb/certs/bootstrap
+
+echo "Stopping and starting services"
+systemctl stop radiusd
+systemctl start radiusd
+systemctl status radiusd
+sleep 5
+echo "Certificates Updated"
+echo " "
+read -p "Press Any Key"

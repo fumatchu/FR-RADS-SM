@@ -1,0 +1,39 @@
+#!/bin/bash
+clear
+cat <<EOF
+This will generate extended certificates for testing purposes.
+If you are going to run this server in production, you should be installing
+valid certificates on this server from a valid cert authority
+
+Please type "y" if you want to proceeed
+EOF
+
+
+
+
+while true; do
+
+read -p "I understand the ramifications of using testing certs for 802.1x on this server  (y/n) " yn
+
+case $yn in
+        [yY] ) echo ok, we will proceed;
+                break;;
+        [nN] ) echo user did not agree...;
+                exit;;
+        * ) echo invalid response;;
+esac
+
+done
+
+
+#create new certs
+/etc/raddb/certs/bootstrap
+
+echo "Stopping and starting services"
+systemctl stop radiusd
+systemctl start radiusd
+systemctl status radiusd
+read -p "Press Any Key"
+echo "Certificates Updated"
+echo " "
+read -p "Press Any Key"

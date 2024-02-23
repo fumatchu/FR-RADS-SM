@@ -13,33 +13,39 @@ items=(1 "Add MAC Address for Auth"
     2 "Delete MAC Address from Auth"
     3 "Add MAC Address for Auth with iPSK"
     4 "Delete MAC Address with iPSK from Auth"
-    5 "Edit Users File"
-    6 "Start FreeRADIUS Service"
-    7 "Stop FreeRADIUS Service"
-    8 "Restart FreeRADIUS  Service"
-    9 "FreeRADIUS Service Status"
-    10 "Debug Mode -radiusd -X-"
-    11 "AD Connector Diag"
-    12 "Test PEAP/MSCHAP"
+    5 "Query Users File"
+    6 "Edit Users File"
+    7 "Start FreeRADIUS Service"
+    8 "Stop FreeRADIUS Service"
+    9 "Restart FreeRADIUS  Service"
+    10 "FreeRADIUS Service Status"
+    11 "Debug Mode -radiusd -X-"
+    12 "AD Connector Diag"
+    13 "Test PEAP/MSCHAP"
+    14 "Generate self-signed Certs"
+    15 "Renew Prexisting Certs"
 )
 
 while choice=$(dialog --title "$TITLE" \
     --backtitle "FreeRADIUS Service Management" \
-    --menu "Please select" 20 50 3 "${items[@]}" \
+    --menu "Please select" 25 50 3 "${items[@]}" \
     2>&1 >/dev/tty); do
     case $choice in
     1) /root/.servman/FRManager/create-mac-auth-entry ;;
     2) /root/.servman/FRManager/delete-mac-auth-entry ;;
     3) /root/.servman/FRManager/create-mac-auth-entry-ipsk ;;
     4) /root/.servman/FRManager/delete-mac-auth-entry-ipsk ;;
-    5) /root/.servman/FRManager/edit-users ;;
-    6) /root/.servman/FRManager/start-freeradius-server ;;
-    7) /root/.servman/FRManager/stop-freeradius-server ;;
-    8) /root/.servman/FRManager/restart-freeradius-server ;;
-    9) /root/.servman/FRManager/service-freeradius-status ;;
-    10) /root/.servman/FRManager/debug-freeradius ;;
-    11) /root/.servman/FRManager/debug-ad-connector ;;
-    12) /root/.servman/FRManager/fr-peap-mschap-test ;;
+    5) /root/.servman/FRManager/query-mac ;;
+    6) /root/.servman/FRManager/edit-users ;;
+    7) /root/.servman/FRManager/start-freeradius-server ;;
+    8) /root/.servman/FRManager/stop-freeradius-server ;;
+    9) /root/.servman/FRManager/restart-freeradius-server ;;
+    10) /root/.servman/FRManager/service-freeradius-status ;;
+    11) /root/.servman/FRManager/debug-freeradius ;;
+    12) /root/.servman/FRManager/debug-ad-connector ;;
+    13) /root/.servman/FRManager/fr-peap-mschap-test ;;
+    14) /root/.servman/FRManager/generate-cert ;;
+    15) /root/.servman/FRManager/renew-cert ;;
     *) ;; # some action on other
     esac
 done
