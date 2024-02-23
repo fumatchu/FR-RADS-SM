@@ -31,7 +31,7 @@ The installer will continue shortly
 EOF
 
 
-sleep 20
+sleep 5
 dnf -y install dialog nano htop iptraf-ng mc
 #If SM exists, delete it
 rm  -r -f /root/.servman
