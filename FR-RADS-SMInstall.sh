@@ -1,11 +1,14 @@
-## SMInstall.sh
+#!/bin/sh
+#FR-RADS-SMINstall.sh
+#This script installs a set of scripts for FreeRADIUS Management
+
 if [ "$majoros" = "9" ]; then
     echo ${red}"Sorry, but this installer only works on Rocky 9.X ${textreset}"
     echo "Please upgrade to ${green}Rocky 9.x${textreset}"
     echo "Exiting the installer..."
     exit
 else
-    echo ${green}"Version information matches..Continuing${textreset}"
+    echo " "
 fi
 
 #Checking for user permissions
@@ -14,18 +17,19 @@ if [ "$user" = "root" ]; then
     echo "Exiting"
     exit
 else
-    echo "Running Program"
+    echo " "
 fi
 
+
 cat <<EOF
-This Installer will provide a GUI Driven menu for interacting with your system.
-You can disable it, or not use it at all if you are comfortable with CLI.
-However, there are tools built in for diagnotstics on FreeRADIUS and testers to
-assist in troubleshooting or validating configurations.
+${GREEN}Installing Server Management${TEXTRESET}
+This Installer will provide a set of scripts wrapped in a dialog GUI
+You will be able to manage components of FreeRADIUS and services with it
 
 
 The installer will continue shortly
 EOF
+
 
 sleep 20
 #If SM exists, delete it
