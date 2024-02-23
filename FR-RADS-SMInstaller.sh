@@ -41,6 +41,8 @@ ${YELLOW}*****************************
 Retrieving Files from GitHub
 *****************************${TEXTRESET}
 EOF
+
+sleep 1
 mkdir /root/FR-RADS-SMInstaller
 
 git clone https://github.com/fumatchu/FR-RADS-SM.git /root/FR-RADS-SMInstaller
