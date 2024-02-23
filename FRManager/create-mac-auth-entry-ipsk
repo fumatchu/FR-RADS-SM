@@ -40,7 +40,7 @@ awk '{if(NR%2==0) {print var,$0} else {var=$0}}' /root/.servman/FRManager/MAC_TE
 echo "         Tunnel-Password = $TUNNELPASS" >> /root/.servman/FRManager/MAC_TEMPLATE_FINAL
 echo "#$DESC" >> /root/.servman/FRManager/MAC_TEMPLATE_FINAL
 
-sed -i -e '13r /root/.servman/FRManager/MAC_TEMPLATE_FINAL' /etc/raddb/mods-config/files/authorize
+sed -i -e '14r /root/.servman/FRManager/MAC_TEMPLATE_FINAL' /etc/raddb/mods-config/files/authorize
 rm -f /root/.servman/FRManager/MAC*
 echo " "
 echo "You Must Restart the FreeRADIUS Server for the changes to take effect"
