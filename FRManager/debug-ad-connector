@@ -129,8 +129,11 @@ echo " "
 read -p "Press Any Key When Ready or Ctrl -C to cancel"
 
 cat <<EOF
-If all of these tests passed validation, your troubleshooting steps for the connection between the FreeRADIUS server
-and Active Directory is complete. You should further test connectivity between the NAS endpoint and FreeRADIUS, or check Certs if this is an endpoint issue and you are using PEAP/MSCHAPv2
+If all of these tests passed validation, your troubleshooting steps for the connection 
+between the FreeRADIUS server and Active Directory is complete. 
+You should further test connectivity between the NAS endpoint and FreeRADIUS
+or check Certs if this is an endpoint issue and you are using PEAP/MSCHAPv2
+
 EOF
 
 echo "Restarting FreeRADIUS"
