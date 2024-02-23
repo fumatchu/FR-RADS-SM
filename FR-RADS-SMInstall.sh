@@ -32,6 +32,7 @@ EOF
 
 
 sleep 20
+dnf -y install dialog nano htop iptraf-ng mc
 #If SM exists, delete it
 rm  -r -f /root/.servman
 rm -r -f /usr/bin/server-manager
