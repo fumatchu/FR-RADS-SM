@@ -1,25 +1,22 @@
 #!/bin/bash
+TEXTRESET=$(tput sgr0)
+RED=$(tput setaf 1)
+YELLOW=$(tput setaf 3)
+GREEN=$(tput setaf 2)
+USER=$(whoami)
+
 #Checking for user permissions
-user=$(whoami)
-if [ "$user" != "root" ]; then
-echo ${red}"This program must be run as root ${textreset}"
-echo "Exiting"
-exit
+if [ "$USER" = "root" ]; then
+echo " "
 else
-echo "Running Program"
+  echo ${RED}"This program must be run as root ${TEXTRESET}"
+  echo "Exiting"
 fi
-textreset=$(tput sgr0)
-red=$(tput setaf 1)
-yellow=$(tput setaf 3)
-green=$(tput setaf 2)
-maclower=$($MACADDR |sed -e 's/\(.*\)/\L\1/')
 clear
-cat  <<EOF
-${red}FreeRADIUS MAC AUTH UPDATE WITH IPSK${textreset}
-${yellow}Create MAC Auth with iPSK${textreset}
-
+cat << EOF
+${GREEN}FreeRADIUS Server Management${TEXTRESET}
+${GREEN}Add MAC Auth Entry with IPSK${TEXTRESET}
 EOF
-
 read -p "Please input the mac address without hyphens or special characters (i.e. 00B0D063C226): " MACADDR
 read -p "Please provide a description for the MAC Address: " DESC
 read -p "Please provide the Tunnel Password you would like to use: " TUNNELPASS
@@ -46,13 +43,20 @@ echo " "
 echo "You Must Restart the FreeRADIUS Server for the changes to take effect"
 
 while true; do
-read -p "Would you like to restart the service now? (y/n) " yn
-case $yn in
-   [yY] ) systemctl restart radiusd;
-      break;;
-   [nN] ) echo exiting...;
-      exit;;
-   * ) echo invalid response;;
-esac
+   read -p "Would you like to restart the service now? (y/n) " yn
+   case $yn in
+   [yY])
+      echo ${GREEN}"Restarting FreeRADIUS${TEXTRESET}"
+      sleep 1
+      systemctl restart radiusd
+      break
+      ;;
+   [nN])
+      echo ${RED}"Cancelled${TEXTRESET}"
+      sleep 1
+      exit
+      ;;
+   *) echo invalid response ;;
+   esac
 done
 exit
