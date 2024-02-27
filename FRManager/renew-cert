@@ -29,11 +29,12 @@ done
 #create new certs
 /etc/raddb/certs/bootstrap
 
-echo "Stopping and starting services"
+echo ${RED}"Stopping and starting services${TEXTRESET}"
+sleep 1
 systemctl stop radiusd
 systemctl start radiusd
 systemctl status radiusd
 read -p "Press Any Key"
-echo "Certificates Updated"
+echo ${GREEN}"Certificates Updated${TEXTRESET}"
 echo " "
 read -p "Press Any Key"
