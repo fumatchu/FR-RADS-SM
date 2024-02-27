@@ -16,9 +16,9 @@ while true; do
 read -p "I understand the ramifications of using testing certs for 802.1x on this server  (y/n) " yn
 
 case $yn in
-        [yY] ) echo ok, we will proceed;
+        [yY] ) echo ${GREEN}" Updating Certificates ${TEXTRESET}";
                 break;;
-        [nN] ) echo user did not agree...;
+        [nN] ) echo echo ${RED}"Cancelled${TEXTRESET}";
                 exit;;
         * ) echo invalid response;;
 esac
