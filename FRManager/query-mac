@@ -1,25 +1,23 @@
 #!/bin/bash
+TEXTRESET=$(tput sgr0)
+RED=$(tput setaf 1)
+YELLOW=$(tput setaf 3)
+GREEN=$(tput setaf 2)
+USER=$(whoami)
+
 #Checking for user permissions
-user=$(whoami)
-if [ "$user" != "root" ]; then
-   echo ${red}"This program must be run as root ${textreset}"
-   echo "Exiting"
-   exit
+if [ "$USER" = "root" ]; then
+echo " "
 else
-   echo "Running Program"
+  echo ${RED}"This program must be run as root ${TEXTRESET}"
+  echo "Exiting"
 fi
-textreset=$(tput sgr0)
-red=$(tput setaf 1)
-yellow=$(tput setaf 3)
-green=$(tput setaf 2)
-maclower=$($MACADDR | sed -e 's/\(.*\)/\L\1/')
 clear
 cat << EOF
-${red}FreeRADIUS MAC QUERY${textreset}
-${yellow}Query MAC Auth Entry${textreset}
+${GREEN}FreeRADIUS Server Management${TEXTRESET}
+${GREEN}Query for MAC Address${TEXTRESET}
 
 EOF
-
 read -p "Provide the MAC Address (i.e. 00b0d063c221) or description to search: " QUERY
 
 echo "Result:"
@@ -27,7 +25,7 @@ echo "Result:"
 more /etc/raddb/users | grep $QUERY -C2
 cat  << EOF
 
-${red}Note- The Description is UNDER the MAC address Entry${textreset}
+${RED}Note- The Description is UNDER the MAC address Entry${TEXTRESET}
 
 EOF
 read -p "Press Any Key to Continue"
