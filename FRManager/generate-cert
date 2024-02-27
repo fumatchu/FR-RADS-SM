@@ -16,6 +16,7 @@ clear
 cat << EOF
 ${GREEN}FreeRADIUS Server Management${TEXTRESET}
 ${GREEN}Generate 5 year custom certificates${TEXTRESET}
+
 EOF
 cat <<EOF
 This is a one time self-generation script that will modify the cnf files in the 
