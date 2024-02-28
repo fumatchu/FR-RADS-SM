@@ -29,13 +29,14 @@ cat <<EOF
 ${GREEN}Installing Server Management${TEXTRESET}
 This Installer will provide a set of scripts wrapped in a dialog GUI
 You will be able to manage components of FreeRADIUS and services with it
+At Anytime from the CLI, type ${YELLOW}server-manager${TEXTRESET}
 
 
 The installer will continue shortly
 EOF
 
 
-sleep 5
+sleep 7
 dnf -y install dialog nano htop iptraf-ng mc
 #If SM exists, delete it
 rm  -r -f /root/.servman
