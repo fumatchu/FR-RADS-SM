@@ -57,5 +57,6 @@ chmod 700 -R /root/.servman
 echo "/usr/bin/server-manager" >>/root/.bash_profile
 rm -r -f /root/FR-RADS*
 pkill dialog 
+cd; cd -
 /usr/bin/server-manager
 
