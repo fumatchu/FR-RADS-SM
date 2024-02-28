@@ -15,7 +15,7 @@ fi
 clear
 cat << EOF
 ${GREEN}FreeRADIUS Server Management${TEXTRESET}
-${GREEN}Renew Certificates${TEXTRESET}
+${GREEN}Starting FreeRADIUS${TEXTRESET}
 
 EOF
 
