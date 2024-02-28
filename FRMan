@@ -23,7 +23,7 @@ items=(1 "Add MAC Address for Auth"
     12 "AD Connector Diag"
     13 "Test PEAP/MSCHAP"
     14 "Generate self-signed Certs"
-    15 "Renew Prexisting Certs"
+    15 "Renew existing Certs"
 )
 
 while choice=$(dialog --title "$TITLE" \
