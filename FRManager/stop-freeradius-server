@@ -1,29 +1,26 @@
 #!/bin/bash
+TEXTRESET=$(tput sgr0)
+RED=$(tput setaf 1)
+YELLOW=$(tput setaf 3)
+GREEN=$(tput setaf 2)
+USER=$(whoami)
+
 #Checking for user permissions
-user=$(whoami)
-if [ "$user" != "root" ]; then
-echo ${red}"This program must be run as root ${textreset}"
-echo "Exiting"
-exit
+if [ "$USER" = "root" ]; then
+echo " "
 else
-echo "Running Program"
+  echo ${RED}"This program must be run as root ${TEXTRESET}"
+  echo "Exiting"
 fi
-textreset=$(tput sgr0)
-red=$(tput setaf 1)
-yellow=$(tput setaf 3)
-green=$(tput setaf 2)
-
 clear
-cat  <<EOF
-${red}Stopping FreeRadius${textreset} Service
+cat << EOF
+${GREEN}FreeRADIUS Server Management${TEXTRESET}
+${GREEN}Stopping FreeRADIUS${TEXTRESET}
+
 EOF
-systemctl stop radiusd
-ps -ax | grep radiusd | head 
 
-
-read -p "Pess Any Key" 
+systemctl stop radiusd 
+sleep 1 
 
 systemctl status radiusd
-
-read -p "Press Any Key"
-
+sleep 3
