@@ -50,4 +50,4 @@ git clone https://github.com/fumatchu/FR-RADS-SM.git /root/FR-RADS-SMInstaller
 chmod 700 /root/FR-RADS-SMInstaller/FR*
 clear
 
-/root/FR-RADS-SMInstaller/FR-RADS-SMInstall.sh
+/root/FR-RADS-SMInstaller/FR-RADS-FirstInstall.sh
