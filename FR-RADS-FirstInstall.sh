@@ -57,6 +57,16 @@ mv -v -f server-manager /usr/bin/
 chmod 700 -R /root/.servman
 echo "/usr/bin/server-manager" >>/root/.bash_profile
 rm -r -f /root/FR-RADS*
-pkill dialog 
-cd; cd -
-/usr/bin/server-manager
+clear
+cat << EOF
+${GREEN}*********************
+SM Installation Complete
+*********************${TEXTRESET}
+
+The server will reboot now
+EOF
+echo " "
+read -p "Press Any Key to Continue"
+echo ${RED}"Rebooting${TEXTRESET}"
+sleep 1
+reboot
